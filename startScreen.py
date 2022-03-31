@@ -1,3 +1,4 @@
+from cgitb import text
 import email
 from tkinter import *
 from tkinter.font import BOLD
@@ -16,18 +17,19 @@ class screenLogin(Frame):
     def loginValidation(self):
         email = self.emailEntry.get()
         password = self.passwordEntry.get()
-        
+        etiqueta = False
         dataBaseConnected = user()
         comprueba = dataBaseConnected.getAllUserMailPass()
         for prueba in comprueba:
             if prueba[0] == email:
                 if prueba[1] == password:
-                    print("CONTRASEÑA CORRECTA")
+                    etiqueta = True
                     break
                 else:
-                    print("")
-            else:
-                print("CORREO NO ENCONTADO")
+                    break                
+        if etiqueta==False:
+            errorLabel = Label(self.spaceFrameError, text="User not available", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
+            errorLabel.pack()
         
     def create_widgets(self):
         
@@ -83,8 +85,8 @@ class screenLogin(Frame):
         self.registerButton.config(bg="#17202A", activebackground="#1B2631", activeforeground="#F8F9F9", bd=1)
         self.registerButton.pack(side="right")
         
-        self.spaceFrame = Frame(self, width=400, height=15, bg="white")
-        self.spaceFrame.pack()
+        self.spaceFrameError = Frame(self, width=400, height=15, bg="#1B2631")
+        self.spaceFrameError.pack()
         
         loginFrame = Frame(self)
         loginFrame.config(bg="#1B2631")
