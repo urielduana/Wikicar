@@ -1,9 +1,8 @@
-from glob import escape
-from brandConnection import *
+from mainConnection import *
 
-class model(brand):
+class model(dataBase):
     def __init__(self):
-        brand.__init__(self)
+        dataBase.__init__(self)
         
     def getAllModelId(self):
         sql = 'SELECT Id_model, Model_name FROM model'
@@ -69,14 +68,12 @@ class model(brand):
     def selectModel(self, id):
         sql = 'SELECT * FROM model WHERE Id_model = {}'.format
         
-        brandDataBase = brand()
         
         try:
             self.cursor.execute(sql)
             model = self.cursor.fetchone()
             
             print("Modelo:", model[1])
-            print("Marca:", brandDataBase.selectBrandName(model[11]))
             print("Tipo de modelo:", model[2])
             print("No. de puertas:", model[3])
             print("No. de asientos:", model[4])
@@ -97,12 +94,10 @@ class model(brand):
             
             self.cursor.execute(sql)
             models = self.cursor.fetchall()
-            brandDataBase = brand()
             
             for model in models:
                 
                 print("Modelo:", model[1])
-                print("Marca:", brandDataBase.selectBrandName(model[11]))
                 print("Tipo de modelo:", model[2])
                 print("No. de puertas:", model[3])
                 print("No. de asientos:", model[4])

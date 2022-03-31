@@ -1,8 +1,8 @@
-from sectionConnection import *
+from mainConnection import * 
 
-class post(section):
+class post(dataBase):
     def __init__(self):
-        section.__init__(self)
+        dataBase.__init__(self)
         
     def getAllPostId(self):
         sql = 'SELECT Id_post FROM post'
@@ -13,7 +13,7 @@ class post(section):
             idSeleccion = []
             
             for post in posts:
-                idSeleccion.append(section[0])
+                idSeleccion.append(post[0])
                 return idSeleccion
         except Exception as e:
             raise
@@ -25,8 +25,8 @@ class post(section):
             self.cursor.execute(sql)
             post = self.cursor.fetchone()
             
-            print("Last ID", section[0])
-            return section[0]
+            print("Last ID", post[0])
+            return post[0]
         
         except Exception as e:
             raise
@@ -59,12 +59,8 @@ class post(section):
         try:
             self.cursor.execute(sql)
             posts = self.cursor.fetchall()
-            sectionDataBase = section()
             
             for post in posts:
-                name = sectionDataBase.selectSectionName(post[4])
-                print("Modelo:", name[1])
-                print("Sección:", name[0])
                 print("Fecha:", post[1])
                 print("Puntuacion:", post[2])
                 print(post[3])

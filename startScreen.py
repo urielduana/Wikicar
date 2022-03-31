@@ -1,9 +1,7 @@
-from cgitb import text
-import fractions
+import email
 from tkinter import *
 from tkinter.font import BOLD
-from tkinter.ttk import Labelframe
-from turtle import bgcolor, left, right
+from DataConnection.userConnection import *
 
 class screenLogin(Frame):
     def __init__(self, master):
@@ -13,8 +11,26 @@ class screenLogin(Frame):
         self.master.geometry("900x600")
         self.pack()
         self.create_widgets()
+        
+    def loginValidation(self):
+        self.create_widgets()
 
+        dataBaseConnected = user()
+        comprueba = dataBaseConnected.getAllUserMailPass()
+        
+
+        for prueba in comprueba:
+            print(prueba)
+            if prueba[0] == email:
+                if prueba[1] == password:
+                    print("login correcto")
+                else:
+                    print("NO LOGIN")
+            else:
+                print("NO LOGIN")
+        
     def create_widgets(self):
+        self.loginValidation()
         
         welcomeLabel = Label(self, text="Welcome to WikiCar", fg="#ECF0F1", font=("Helveltic",20, BOLD))
         welcomeLabel.config(bg="#1B2631", height=4)
@@ -75,7 +91,7 @@ class screenLogin(Frame):
         loginFrame.config(bg="#1B2631")
         loginFrame.pack()
         
-        loginButton = Button(loginFrame, text="Login" ,fg="#17202A", font=("Helveltic",17, BOLD))
+        loginButton = Button(loginFrame, text="Login" ,fg="#17202A", font=("Helveltic",17, BOLD), command= self.loginValidation)
         loginButton.config(bg="#ECF0F1", activebackground="#F8F9F9", activeforeground="#1B2631")
         loginButton.pack()
         

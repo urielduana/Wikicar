@@ -1,8 +1,8 @@
-from modelConnection import *
+from mainConnection import *
 
-class section(model):
+class section(dataBase):
     def __init__(self):
-        model.__init__(self)
+        dataBase.__init__(self)
         
     def getAllSectionId(self):
         sql = 'SELECT Id_section, Section_type FROM section '
@@ -54,11 +54,10 @@ class section(model):
     
     def selectSectionName(self, id):
         sql = 'SELECT Section_type, Model_id FROM section WHERE Id_section = {}'.format(id)
-        modelDataBase = model()
         try:
             self.cursor.execute(sql)
             section = self.cursor.fetchone()
-            sectionNameModel = section[0], modelDataBase.selectModelName(section[1])
+            sectionNameModel = section[0]
             return sectionNameModel
         except Exception as e:
             raise
@@ -69,10 +68,8 @@ class section(model):
         try:
             self.cursor.execute(sql)
             sections = self.cursor.fetchall()
-            modelDataBase = model()
             
             for section in sections:
-                print("Modelo:", modelDataBase.selectModelName(section[3]))
                 print("Nombre de la sección:", section[2])
                 print("Fecha de creación:", section[1])
                 print("___________________\n")

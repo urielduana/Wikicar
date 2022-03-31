@@ -1,5 +1,6 @@
-from totalConnection import *
-dataBaseConnected = totalConnectionDataBase()
+from DataConnection.userConnection import *
+
+dataBaseConnected = user()
 
 comprueba = dataBaseConnected.getAllUserMailPass()
 x="ulises@gmail.com"

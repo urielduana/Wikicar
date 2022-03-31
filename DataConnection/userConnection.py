@@ -1,4 +1,4 @@
-from mainConnection import *
+from DataConnection.mainConnection import *
 
 
 class user(dataBase):

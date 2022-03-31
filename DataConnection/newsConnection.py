@@ -1,8 +1,7 @@
-from sectionConnection import *
-
-class news(section):
+from mainConnection import *
+class news(dataBase):
     def __init__(self):
-        section.__init__(self)
+        dataBase.__init__(self)
         
     def getAllNewsId(self):
         sql = 'SELECT Id_news FROM news'
@@ -59,12 +58,8 @@ class news(section):
         try:
             self.cursor.execute(sql)
             news = self.cursor.fetchall()
-            sectionDataBase = section()
             
             for new in news:
-                name = sectionDataBase.selectSectionName(new[4])
-                print("Modelo:", name[1])
-                print("Sección:", name[0])
                 print("Fecha:", new[1])
                 print("Puntuacion:", new[2])
                 print(new[3])

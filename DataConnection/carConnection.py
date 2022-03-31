@@ -1,10 +1,8 @@
-from userConnection import *
-from brandConnection import *
+from DataConnection.mainConnection import *
 
-class car(brand, user):
+class car(dataBase):
     def __init__(self):
-        brand.__init__(self)
-        user.__init__(self)
+        dataBase.__init__(self)
         
     def getAllCarId(self):
         sql = 'SELECT Id_car, Registration_plate FROM car'
@@ -57,20 +55,16 @@ class car(brand, user):
         
     def selectCar(self, id):
         sql = 'SELECT Id_car, Registration_plate, Color, Deficiency, Mileage, User_id, Brand_id FROM car WHERE Id_car = {}'.format(id)
-        
-        userDataBase = user()
-        brandDataBase = brand()
+
         
         try:
             self.cursor.execute(sql)
             car = self.cursor.fetchone()
             
-            print("Dueño:", userDataBase.selectUserName(car[5]))
             print("Placas:", car[1])
             print("Color:", car[2])
             print("Defectos:", car[3])
             print("Kilometraje:", car[4])
-            print("Marca:", brandDataBase.selectBrandName(car[6]))
             
         except Exception as e:
             raise
@@ -80,17 +74,13 @@ class car(brand, user):
         try:
             self.cursor.execute(sql)
             cars = self.cursor.fetchall()
-            userDataBase = user()
-            brandDataBase = brand()
             
             for car in cars:
                 
-                print("Dueño:", userDataBase.selectUserName(car[5]))
                 print("Placas:", car[1])
                 print("Color:", car[2])
                 print("Defectos:", car[3])
                 print("Kilometraje:", car[4])
-                print("Marca:", brandDataBase.selectBrandName(car[6]))
                 print("___________________\n")
         except Exception as e:
             raise
