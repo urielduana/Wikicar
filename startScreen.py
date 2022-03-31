@@ -12,25 +12,24 @@ class screenLogin(Frame):
         self.pack()
         self.create_widgets()
         
+        
     def loginValidation(self):
-        self.create_widgets()
-
+        email = self.emailEntry.get()
+        password = self.passwordEntry.get()
+        
         dataBaseConnected = user()
         comprueba = dataBaseConnected.getAllUserMailPass()
-        
-
         for prueba in comprueba:
-            print(prueba)
             if prueba[0] == email:
                 if prueba[1] == password:
-                    print("login correcto")
+                    print("CONTRASEÑA CORRECTA")
+                    break
                 else:
-                    print("NO LOGIN")
+                    print("")
             else:
-                print("NO LOGIN")
+                print("CORREO NO ENCONTADO")
         
     def create_widgets(self):
-        self.loginValidation()
         
         welcomeLabel = Label(self, text="Welcome to WikiCar", fg="#ECF0F1", font=("Helveltic",20, BOLD))
         welcomeLabel.config(bg="#1B2631", height=4)
@@ -50,8 +49,8 @@ class screenLogin(Frame):
         emailLabel = Label(emailFrame, text="Email:", fg="#ECF0F1", font=("Helveltic",16, BOLD))
         emailLabel.config(bg="#1B2631")
         emailLabel.pack(side="left")
-        emailEntry = Entry(emailFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=16, insertbackground="#ECF0F1")
-        emailEntry.pack(side="right")
+        self.emailEntry = Entry(emailFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=16, insertbackground="#ECF0F1")
+        self.emailEntry.pack(side="right")
         
         spaceFrame = Frame(self, width=400, height=15, bg="#1B2631")
         spaceFrame.pack()
@@ -63,8 +62,8 @@ class screenLogin(Frame):
         passwordLabel = Label(passwordFrame, text="Password:", fg="#ECF0F1", font=("Helveltic",16, BOLD))
         passwordLabel.config(bg="#1B2631")
         passwordLabel.pack(side="left")
-        passwordEntry = Entry(passwordFrame, bg="#1B2631", fg="#ECF0F1", show="*", font=("Arial",14), width=12,  insertbackground="#ECF0F1")
-        passwordEntry.pack(side="right")
+        self.passwordEntry = Entry(passwordFrame, bg="#1B2631", fg="#ECF0F1", show="*", font=("Arial",14), width=12,  insertbackground="#ECF0F1")
+        self.passwordEntry.pack(side="right")
         
         spaceFrame2 = Frame(self, width=400, height=8, bg="#1B2631")
         spaceFrame2.pack()
@@ -80,20 +79,20 @@ class screenLogin(Frame):
         registerLabel = Label(registerTextFrame, text="Not a member yet?", fg="#ECF0F1", font=("Helveltic",12, BOLD))
         registerLabel.config(bg="#1B2631")
         registerLabel.pack(side="left")
-        registerButton = Button(registerButtonFrame, text="Sign Up", fg="#ECF0F1", font=("Helveltic",11, BOLD))
-        registerButton.config(bg="#17202A", activebackground="#1B2631", activeforeground="#F8F9F9", bd=1)
-        registerButton.pack(side="right")
+        self.registerButton = Button(registerButtonFrame, text="Sign Up", fg="#ECF0F1", font=("Helveltic",11, BOLD))
+        self.registerButton.config(bg="#17202A", activebackground="#1B2631", activeforeground="#F8F9F9", bd=1)
+        self.registerButton.pack(side="right")
         
-        spaceFrame = Frame(self, width=400, height=15, bg="#1B2631")
-        spaceFrame.pack()
+        self.spaceFrame = Frame(self, width=400, height=15, bg="white")
+        self.spaceFrame.pack()
         
         loginFrame = Frame(self)
         loginFrame.config(bg="#1B2631")
         loginFrame.pack()
         
-        loginButton = Button(loginFrame, text="Login" ,fg="#17202A", font=("Helveltic",17, BOLD), command= self.loginValidation)
-        loginButton.config(bg="#ECF0F1", activebackground="#F8F9F9", activeforeground="#1B2631")
-        loginButton.pack()
+        self.loginButton = Button(loginFrame, text="Login" ,fg="#17202A", font=("Helveltic",17, BOLD), command= self.loginValidation)
+        self.loginButton.config(bg="#ECF0F1", activebackground="#F8F9F9", activeforeground="#1B2631")
+        self.loginButton.pack()
         
         
                 
