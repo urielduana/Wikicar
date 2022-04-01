@@ -13,28 +13,54 @@ class screenSignUp(Frame):
                                         #class to create widgets at the same moment that we open the interface
         
         
-    def loginValidation(self):          #Method to create the connection and validation of the login interface with the MySQL database and open the next window
-        
-        email = self.emailEntry.get()           #Variables that connect and save the strings of the email and password entries
-        password = self.passwordEntry.get()
-        
-        tag = False                        #Boolean variable to validate if the validation is incorrect and we need to throw a message to inform it
-        dataBaseConnected = user()
-        
-        check = dataBaseConnected.getAllUserMailPass()  
-        
-        for checked in check:                   #For loop to validate with the email and pass list and open a new window or throw an advise
-            if checked[0] == email:
-                if checked[1] == password:
-                    tag = True
+    def passwordValidation(self):
+        if len(self.passwordEntry.get()) >= 8:        
+            if self.passwordEntry.get() == self.repeatedpassEntry.get():
+                print("Coincide")
+                self.emailValidation()
+            else:
+                errorLabel = Label(self.spaceFrameError, text="The password doesn't match", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
+                errorLabel.pack()       #Label to advise a login problem
+        else:
+            errorLabel = Label(self.spaceFrameError, text="Empty Field", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
+            errorLabel.pack()
+    
+    def emailValidation(self):
+        if len(self.emailEntry.get()) > 0:
+            email = self.emailEntry.get()           #Variables that connect and save the strings of the email and password entries
+                    
+            tag = False                        #Boolean variable to validate if the validation is incorrect and we need to throw a message to inform it
+            dataBaseConnected = user()
+            
+            check = dataBaseConnected.getAllUserMailPass()  
+            for checked in check:                   #For loop to validate with the email and pass list and open a new window or throw an advise
+                if checked[0] == email:
+                    tag = False
                     break
                 else:
-                    break  
-                              
-        if tag==False:
-            errorLabel = Label(self.spaceFrameError, text="User not available", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
-            errorLabel.pack()       #Label to advise a login problem
-        
+                    tag=True
+            if tag==False:
+                errorLabel = Label(self.spaceFrameError, text="Email not available", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
+                errorLabel.pack()
+            if tag == True:
+                self.userRegister()
+
+        else:
+            errorLabel = Label(self.spaceFrameError, text="Empty Field - use + 8 characters", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
+            errorLabel.pack()
+            
+            
+    def userRegister(self):
+        if (len(self.nameEntry.get())>0) or (len(self.lastnameEntry.get())>0) or (len(self.genderEntry.get())>0):
+            
+            dataBaseConnected = user()
+            dataBaseConnected.addUser(self.nameEntry.get(),self.lastnameEntry.get(), self.passwordEntry.get(), self.emailEntry.get(), self.genderEntry.get())
+            print("completo")
+        else:
+            errorLabel = Label(self.spaceFrameError, text="Empty Field - use + 8 characters", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
+            errorLabel.pack()
+                                 
+                
     def create_widgets(self):
         
         #Main welcome labels
@@ -114,6 +140,19 @@ class screenSignUp(Frame):
         self.repeatedpassEntry.pack(side="right")
         
         
+        spaceFrame2 = Frame(self, width=400, height=8, bg="#1B2631")
+        spaceFrame2.pack()
+        
+        
+        genderFrame = Label(self, bg="#1B2631")
+        genderFrame.pack()
+        
+        genderLabel = Label(genderFrame, text="Gender:", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
+        genderLabel.pack(side="left")
+        self.genderEntry = Entry(genderFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=20,  insertbackground="#ECF0F1")
+        self.genderEntry.pack(side="right")
+        
+        
         #Frame assigned to create a label to advice a login problem
         self.spaceFrameError = Frame(self, width=400, height=15, bg="#1B2631")
         self.spaceFrameError.pack()
@@ -124,7 +163,7 @@ class screenSignUp(Frame):
         loginFrame.pack()
         
         #Button to execute the validationLogin method
-        self.signUpButton = Button(loginFrame, text="Sign Up" ,fg="#17202A", font=("Helveltic",17, BOLD), command= self.loginValidation)
+        self.signUpButton = Button(loginFrame, text="Sign Up" ,fg="#17202A", font=("Helveltic",17, BOLD), command= self.passwordValidation)
         self.signUpButton.config(bg="#ECF0F1", activebackground="#F8F9F9", activeforeground="#1B2631")
         self.signUpButton.pack()
         
