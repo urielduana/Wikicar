@@ -1,5 +1,5 @@
 from tkinter import *
-from startScreen import *
+from loginScreen import *
 
 root = Tk()
 v = screenLogin(root)
