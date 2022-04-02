@@ -4,8 +4,9 @@ from DataConnection.userConnection import *
 from signUpsScreen import screenSignUp     #User database connection class
 
 class screenLogin(Frame):
-    def __init__(self, master):
+    def __init__(self, master):        
         super().__init__(master)
+        
         self.master.title("Login - WikiCar")    
         self.config(bg="#1B2631")
         self.master.config(bg="#17202A")    #Main Panel configuration and size
@@ -37,11 +38,13 @@ class screenLogin(Frame):
             errorLabel = Label(self.spaceFrameError, text="User not available", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
             errorLabel.pack()       #Label to advise a login problem
     
+    
     def openSignUp(self):
         self.master.destroy()     
         root = Tk()
         v = screenSignUp(root)
         v.mainloop()
+    
     
     def create_widgets(self):
         
@@ -94,11 +97,9 @@ class screenLogin(Frame):
         spaceFrame2.pack()
         
         
-        
         #Frame created to contain a label and register button
         #Was created 3 frames to make it stetic and mantain the button and the label at the center
-        registerFrame = Frame(self)
-        registerFrame.config(bg="#1B2631")
+        registerFrame = Frame(self, bg="#1B2631")
         registerFrame.pack()
         #Frame created to contain a label inside the main registerFrame
         registerTextFrame = Frame(registerFrame)
@@ -107,12 +108,10 @@ class screenLogin(Frame):
         registerButtonFrame = Frame(registerFrame)
         registerButtonFrame.pack(side="right")
         
-        registerLabel = Label(registerTextFrame, text="Not a member yet?", fg="#ECF0F1", font=("Helveltic",12, BOLD))
-        registerLabel.config(bg="#1B2631")
+        registerLabel = Label(registerTextFrame, text="Not a member yet?", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
         registerLabel.pack(side="left")
-        self.registerButton = Button(registerButtonFrame, text="Sign Up", fg="#ECF0F1", font=("Helveltic",11, BOLD))
-        self.registerButton.config(bg="#17202A", activebackground="#1B2631", activeforeground="#F8F9F9", bd=1, command=self.openSignUp)
-        
+        self.registerButton = Button(registerButtonFrame, text="Sign Up", fg="#ECF0F1", font=("Helveltic",11, BOLD),bg="#17202A", activebackground="#1B2631", activeforeground="#F8F9F9", bd=1)
+        self.registerButton.config(command=self.openSignUp)
         self.registerButton.pack(side="right")
         
         

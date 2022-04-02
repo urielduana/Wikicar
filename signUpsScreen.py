@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter.font import BOLD
 from DataConnection.userConnection import *     #User database connection class
-
+from loginScreen import screenLogin
 class screenSignUp(Frame):
     def __init__(self, master):
         super().__init__(master)
@@ -60,7 +60,13 @@ class screenSignUp(Frame):
         else:
             errorLabel = Label(self.spaceFrameError, text="Empty Field - use + 8 characters", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
             errorLabel.pack()
-                                 
+    
+    
+    def openLogin(self):
+        self.master.destroy()
+        root = Tk()
+        v = screenLogin(root)
+        v.mainloop()                    
                 
     def create_widgets(self):
         
@@ -72,7 +78,7 @@ class screenSignUp(Frame):
         bottomLoginLabel.pack()
         
         
-        spaceFrame = Frame(self, width=400, height=50, bg="#1B2631")
+        spaceFrame = Frame(self, width=400, height=15, bg="#1B2631")
         spaceFrame.pack()        
         
         
@@ -148,23 +154,35 @@ class screenSignUp(Frame):
         genderFrame = Label(self, bg="#1B2631")
         genderFrame.pack()
         
-        genderLabel = Label(genderFrame, text="Gender:", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
+        genderLabel = Label(genderFrame, text="Gender:", fg="#ECF0F1", font=("Helveltic",16, BOLD), bg="#1B2631")
         genderLabel.pack(side="left")
-        self.genderEntry = Entry(genderFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=20,  insertbackground="#ECF0F1")
+        self.genderEntry = Entry(genderFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=18,  insertbackground="#ECF0F1")
         self.genderEntry.pack(side="right")
         
         
+        loginFrame = Frame(self, bg="#1B2631")
+        loginFrame.pack()
+        loginTextFrame = Frame(loginFrame)
+        loginTextFrame.pack(side="left")
+        loginButtonFrame = Frame(loginFrame)
+        loginButtonFrame.pack(side="right")
+        
+        loginLabel = Label(loginTextFrame, text="Already register?", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
+        loginLabel.pack(side="left")
+        self.loginButton = Button(loginButtonFrame, text="Login", fg="#ECF0F1", font=("Helveltic",11, BOLD),bg="#17202A", activebackground="#1B2631", activeforeground="#F8F9F9", bd=1)
+        self.loginButton.config(command=self.openLogin)
+        self.loginButton.pack(side="right")
         #Frame assigned to create a label to advice a login problem
         self.spaceFrameError = Frame(self, width=400, height=15, bg="#1B2631")
         self.spaceFrameError.pack()
         
         
         #Last container to the login button
-        loginFrame = Frame(self, bg="#1B2631")
-        loginFrame.pack()
+        signUpFrame = Frame(self, bg="#1B2631")
+        signUpFrame.pack()
         
         #Button to execute the validationLogin method
-        self.signUpButton = Button(loginFrame, text="Sign Up" ,fg="#17202A", font=("Helveltic",17, BOLD), command= self.passwordValidation)
+        self.signUpButton = Button(signUpFrame, text="Sign Up" ,fg="#17202A", font=("Helveltic",17, BOLD), command= self.passwordValidation)
         self.signUpButton.config(bg="#ECF0F1", activebackground="#F8F9F9", activeforeground="#1B2631")
         self.signUpButton.pack()
         
