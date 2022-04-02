@@ -1,10 +1,12 @@
 from tkinter import *
 from tkinter.font import BOLD
-from DataConnection.userConnection import *     #User database connection class
+from DataConnection.userConnection import *
+from signUpsScreen import screenSignUp     #User database connection class
 
 class screenLogin(Frame):
     def __init__(self, master):
         super().__init__(master)
+        self.master.title("Login - WikiCar")    
         self.config(bg="#1B2631")
         self.master.config(bg="#17202A")    #Main Panel configuration and size
         self.master.geometry("900x600")
@@ -34,7 +36,13 @@ class screenLogin(Frame):
         if tag==False:
             errorLabel = Label(self.spaceFrameError, text="User not available", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
             errorLabel.pack()       #Label to advise a login problem
-        
+    
+    def openSignUp(self):
+        self.master.destroy()     
+        root = Tk()
+        v = screenSignUp(root)
+        v.mainloop()
+    
     def create_widgets(self):
         
         #Main welcome labels
@@ -103,7 +111,8 @@ class screenLogin(Frame):
         registerLabel.config(bg="#1B2631")
         registerLabel.pack(side="left")
         self.registerButton = Button(registerButtonFrame, text="Sign Up", fg="#ECF0F1", font=("Helveltic",11, BOLD))
-        self.registerButton.config(bg="#17202A", activebackground="#1B2631", activeforeground="#F8F9F9", bd=1)
+        self.registerButton.config(bg="#17202A", activebackground="#1B2631", activeforeground="#F8F9F9", bd=1, command=self.openSignUp)
+        
         self.registerButton.pack(side="right")
         
         

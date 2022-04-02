@@ -5,6 +5,7 @@ from DataConnection.userConnection import *     #User database connection class
 class screenSignUp(Frame):
     def __init__(self, master):
         super().__init__(master)
+        self.master.title("Sign Up - WikiCar")    #Titulo de la ventana
         self.config(bg="#1B2631")
         self.master.config(bg="#17202A")    #Main Panel configuration and size
         self.master.geometry("900x600")

@@ -3,5 +3,5 @@ from loginScreen import *
 from signUpsScreen import *
 
 root = Tk()
-v = screenSignUp(root)
+v = screenLogin(root)
 v.mainloop()
