@@ -1,23 +1,26 @@
 from tkinter import *
 from tkinter.font import BOLD
+from turtle import left
+
+from pip import main
 from DataConnection.userConnection import *
 
-class screenLogin(Frame):
+class screenBrandRegister(Frame):
     def __init__(self, master):        
         super().__init__(master)
         
         self.master.title("Login - WikiCar")    
-        self.config(bg="#1B2631")
         self.master.config(bg="#17202A")    #Main Panel configuration and size
-        self.master.geometry("900x600")
-        self.pack()                     #Interface created widht pack to try to make it responsive
+        self.master.geometry("1200x800")
+        self.config(bg="#1B2631", width=850, height=750)
+        self.pack(side="right")                     #Interface created widht pack to try to make it responsive
         self.create_widgets()           #Create widgets Initialized at the beggining of the 
                                         #class to create widgets at the same moment that we open the interface
         
         
     def loginValidation(self):          #Method to create the connection and validation of the login interface with the MySQL database and open the next window
         
-        email = self.emailEntry.get()           #Variables that connect and save the strings of the email and password entries
+        email = self.brandEntry.get()           #Variables that connect and save the strings of the email and password entries
         password = self.passwordEntry.get()
         
         tag = False                        #Boolean variable to validate if the validation is incorrect and we need to throw a message to inform it
@@ -45,31 +48,27 @@ class screenLogin(Frame):
     
     def create_widgets(self):
         
-        #Main welcome labels
-        welcomeLabel = Label(self, text="Welcome to WikiCar", fg="#ECF0F1", font=("Helveltic",20, BOLD))
+        welcomeLabel = Label(self, text="New Brand Registration", fg="#ECF0F1", font=("Helveltic",26, BOLD))
         welcomeLabel.config(bg="#1B2631", height=4)
         welcomeLabel.pack()  
-                
-        bottomLoginLabel = Label(self, text="Login", fg="#ECF0F1", font=("Helvetic", 22, BOLD))
+             
+        bottomLoginLabel = Label(self, text="If the brand is already register, you cannot add it. \nPlease, don't be rude :D", fg="#ECF0F1", font=("Helvetic", 13, BOLD))
         bottomLoginLabel.config(bg="#1B2631")
         bottomLoginLabel.pack()
         
-        
-        #Space to add an image in a label
-        imageFrame = Frame(self, width=400, height=150, bg="#1B2631")
-        imageFrame.pack()
-        
-        
+        spaceFrame = Frame(self, width=400, height=15, bg="#1B2631")
+        spaceFrame.pack()
+
         #Frame created to contain a label and email entry
-        emailFrame = Frame(self)
-        emailFrame.config(bg="#1B2631")
-        emailFrame.pack()
+        brandFrame = Frame(self)
+        brandFrame.config(bg="#1B2631")
+        brandFrame.pack()
         
-        emailLabel = Label(emailFrame, text="Email:", fg="#ECF0F1", font=("Helveltic",16, BOLD))
-        emailLabel.config(bg="#1B2631")
-        emailLabel.pack(side="left")
-        self.emailEntry = Entry(emailFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=16, insertbackground="#ECF0F1")
-        self.emailEntry.pack(side="right")  #"self." used to connect widgets wirh other moethods
+        brandLabel = Label(brandFrame, text="Brand Name:", fg="#ECF0F1", font=("Helveltic",16, BOLD))
+        brandLabel.config(bg="#1B2631")
+        brandLabel.pack(side="left")
+        self.brandEntry = Entry(brandFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=16, insertbackground="#ECF0F1")
+        self.brandEntry.pack(side="right")  #"self." used to connect widgets wirh other moethods
         
         
         #Frame to create a line break
@@ -132,7 +131,7 @@ class screenLogin(Frame):
         
         #Frame used to colorized the login form 
         centerFrame = Frame(self)
-        centerFrame.config(width=400, height=600, bg="#1B2631")
+        centerFrame.config(width=850, height=750, bg="#1B2631")
         centerFrame.pack()
         
                 
