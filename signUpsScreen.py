@@ -1,7 +1,8 @@
 from tkinter import *
 from tkinter.font import BOLD
 from DataConnection.userConnection import *     #User database connection class
-from loginScreen import screenLogin
+
+
 class screenSignUp(Frame):
     def __init__(self, master):
         super().__init__(master)
@@ -20,11 +21,9 @@ class screenSignUp(Frame):
                 print("Coincide")
                 self.emailValidation()
             else:
-                errorLabel = Label(self.spaceFrameError, text="The password doesn't match", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
-                errorLabel.pack()       #Label to advise a login problem
+                self.errorLabel.config(text="The password doesn't match")
         else:
-            errorLabel = Label(self.spaceFrameError, text="Empty Field", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
-            errorLabel.pack()
+            self.errorLabel.config(text="Empty Field")
     
     def emailValidation(self):
         if len(self.emailEntry.get()) > 0:
@@ -41,14 +40,12 @@ class screenSignUp(Frame):
                 else:
                     tag=True
             if tag==False:
-                errorLabel = Label(self.spaceFrameError, text="Email not available", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
-                errorLabel.pack()
+                self.errorLabel.config(text="Email not available")
             if tag == True:
                 self.userRegister()
 
         else:
-            errorLabel = Label(self.spaceFrameError, text="Empty Field - use + 8 characters", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
-            errorLabel.pack()
+            self.errorLabel.config(text="Empty Field - use + 8 characters")
             
             
     def userRegister(self):
@@ -58,8 +55,7 @@ class screenSignUp(Frame):
             dataBaseConnected.addUser(self.nameEntry.get(),self.lastnameEntry.get(), self.passwordEntry.get(), self.emailEntry.get(), self.genderEntry.get())
             print("completo")
         else:
-            errorLabel = Label(self.spaceFrameError, text="Empty Field - use + 8 characters", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
-            errorLabel.pack()
+            self.errorLabel.config(text="Empty Field - use + 8 characters")
     
     
     def openLogin(self):
@@ -104,19 +100,6 @@ class screenSignUp(Frame):
         self.lastnameEntry.pack(side="right")
         
         
-        spaceFrame = Frame(self, width=400, height=15, bg="#1B2631")
-        spaceFrame.pack()
-        
-        
-        #Frame created to contain a label and email entry
-        emailFrame = Frame(self, bg="#1B2631")
-        emailFrame.pack()
-        
-        emailLabel = Label(emailFrame, text="Email:", fg="#ECF0F1", font=("Helveltic",16, BOLD), bg="#1B2631")
-        emailLabel.pack(side="left")
-        self.emailEntry = Entry(emailFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=20, insertbackground="#ECF0F1")
-        self.emailEntry.pack(side="right")  #"self." used to connect widgets wirh other moethods
-        
         
         #Frame to create a line break
         spaceFrame = Frame(self, width=400, height=15, bg="#1B2631")
@@ -146,6 +129,19 @@ class screenSignUp(Frame):
         self.repeatedpassEntry = Entry(repeatedpassFrame, bg="#1B2631", fg="#ECF0F1", show="*", font=("Arial",14), width=18,  insertbackground="#ECF0F1")
         self.repeatedpassEntry.pack(side="right")
         
+        spaceFrame = Frame(self, width=400, height=15, bg="#1B2631")
+        spaceFrame.pack()
+        
+        
+        #Frame created to contain a label and email entry
+        emailFrame = Frame(self, bg="#1B2631")
+        emailFrame.pack()
+        
+        emailLabel = Label(emailFrame, text="Email:", fg="#ECF0F1", font=("Helveltic",16, BOLD), bg="#1B2631")
+        emailLabel.pack(side="left")
+        self.emailEntry = Entry(emailFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=20, insertbackground="#ECF0F1")
+        self.emailEntry.pack(side="right")  #"self." used to connect widgets wirh other moethods
+        
         
         spaceFrame2 = Frame(self, width=400, height=8, bg="#1B2631")
         spaceFrame2.pack()
@@ -172,9 +168,13 @@ class screenSignUp(Frame):
         self.loginButton = Button(loginButtonFrame, text="Login", fg="#ECF0F1", font=("Helveltic",11, BOLD),bg="#17202A", activebackground="#1B2631", activeforeground="#F8F9F9", bd=1)
         self.loginButton.config(command=self.openLogin)
         self.loginButton.pack(side="right")
+        
+        
         #Frame assigned to create a label to advice a login problem
         self.spaceFrameError = Frame(self, width=400, height=15, bg="#1B2631")
         self.spaceFrameError.pack()
+        self.errorLabel = Label(self.spaceFrameError, fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
+        self.errorLabel.pack()
         
         
         #Last container to the login button
