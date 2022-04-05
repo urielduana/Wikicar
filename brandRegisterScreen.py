@@ -1,49 +1,61 @@
 from tkinter import *
 from tkinter.font import BOLD
-from turtle import left
+from DataConnection.brandConnection import *
 
-from pip import main
-from DataConnection.userConnection import *
-
-class screenBrandRegister(Frame):
-    def __init__(self, master):        
+class screenBrandRegister(Frame, brand):
+    def __init__(self, master):       
         super().__init__(master)
-        
-        self.master.title("Login - WikiCar")    
+        self.master.title("Brand Register - WikiCar")    
         self.master.config(bg="#17202A")    #Main Panel configuration and size
         self.master.geometry("1200x800")
-        self.config(bg="#1B2631", width=850, height=750)
+        self.config(bg="#1B2631")
         self.pack(side="right")                     #Interface created widht pack to try to make it responsive
         self.create_widgets()           #Create widgets Initialized at the beggining of the 
                                         #class to create widgets at the same moment that we open the interface
         
-        
-    def loginValidation(self):          #Method to create the connection and validation of the login interface with the MySQL database and open the next window
-        
-        email = self.brandEntry.get()           #Variables that connect and save the strings of the email and password entries
-        password = self.passwordEntry.get()
-        
-        tag = False                        #Boolean variable to validate if the validation is incorrect and we need to throw a message to inform it
-        dataBaseConnected = user()
-        
-        check = dataBaseConnected.getAllUserMailPass()  
-        
-        for checked in check:                   #For loop to validate with the email and pass list and open a new window or throw an advise
-            if checked[0] == email:
-                if checked[1] == password:
-                    tag = True
+    def brandValidation(self):
+        if len(self.brandEntry.get()) > 0:
+            brands = self.brandEntry.get()         #Variables that connect and save the strings of the brand and password entries
+                    
+            tag = True                        #Boolean variable to validate if the validation is incorrect and we need to throw a message to inform it
+            dataBaseConnected = brand()
+            
+            check = dataBaseConnected.getAllBrandId()  
+            
+            for checked in check:                   #For loop to validate with the brand and pass list and open a new window or throw an advise
+                print(checked[0])
+                if checked[0] == brands:
+                    tag = False
                     break
                 else:
-                    break  
-                              
-        if tag==False:
-            self.errorLabel.config(text="User not available")    
+                    tag=True
+                    
+                    
+            if tag==False:
+                self.errorLabel.config(text="Brand already registered")
+            if tag == True:
+                self.brandRegister()
+
+        else:
+            self.errorLabel.config(text="Empty Field")
     
-    def openSignUp(self):
-        self.master.destroy()     
-        root = Tk()
-        v = screenSignUp(root)
-        v.mainloop()
+    
+    def getTextHistory(self):
+        text = self.historyEntry.get(1.0, END+"-1c")
+        return text
+    
+    def brandRegister(self):
+        historyText = self.getTextHistory()
+        
+        if (len(self.foundersEntry.get())>0) and (len(self.foundersDayEntry.get())>0) and (len(self.foundersMonthEntry.get())>0) and (len(self.foundersYearEntry.get())>0) and (len(self.countryEntry.get())>0) and (len(historyText)>0):
+            dataBaseConnected = brand()
+            date = self.foundersYearEntry.get() + "-" + self.foundersMonthEntry.get() + "-" + self.foundersDayEntry.get()
+            
+            
+            dataBaseConnected.addBrand(self.brandEntry.get(), self.foundersEntry.get(), date, self.countryEntry.get(), historyText)
+            print("Completo")
+        else:
+            self.errorLabel.config(text="Empty Field - use + 8 characters")
     
     
     def create_widgets(self):
@@ -59,7 +71,7 @@ class screenBrandRegister(Frame):
         spaceFrame = Frame(self, width=400, height=15, bg="#1B2631")
         spaceFrame.pack()
 
-        #Frame created to contain a label and email entry
+
         brandFrame = Frame(self)
         brandFrame.config(bg="#1B2631")
         brandFrame.pack()
@@ -71,45 +83,85 @@ class screenBrandRegister(Frame):
         self.brandEntry.pack(side="right")  #"self." used to connect widgets wirh other moethods
         
         
+        
         #Frame to create a line break
         spaceFrame = Frame(self, width=400, height=15, bg="#1B2631")
         spaceFrame.pack()
         
+        #Frame created to contain a label and password entry
+        foundersFrame = Label(self)
+        foundersFrame.config(bg="#1B2631")
+        foundersFrame.pack()
+        
+        foundersLabel = Label(foundersFrame, text="Founders:", fg="#ECF0F1", font=("Helveltic",16, BOLD))
+        foundersLabel.config(bg="#1B2631")
+        foundersLabel.pack(side="left")
+        self.foundersEntry = Entry(foundersFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=12,  insertbackground="#ECF0F1")
+        self.foundersEntry.pack(side="right")
+
+
+
+        #Frame to create a line break
+        spaceFrame = Frame(self, width=400, height=15, bg="#1B2631")
+        spaceFrame.pack()
+
+        dateFoundationFrame = Label(self)
+        dateFoundationFrame.config(bg="#1B2631")
+        dateFoundationFrame.pack()
+        
+        foundersLabel = Label(dateFoundationFrame, text="Foundation Date:", fg="#ECF0F1", font=("Helveltic",16, BOLD), bg="#1B2631")
+        foundersLabel.pack(side="left")
+        foundersDayLabel = Label(dateFoundationFrame, text="Day", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
+        foundersDayLabel.pack(side="left")
+        self.foundersDayEntry = Entry(dateFoundationFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=4,  insertbackground="#ECF0F1")
+        self.foundersDayEntry.pack(side="left")
+        foundersMonthLabel = Label(dateFoundationFrame, text="Month", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
+        foundersMonthLabel.pack(side="left")
+        self.foundersMonthEntry = Entry(dateFoundationFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=4,  insertbackground="#ECF0F1")
+        self.foundersMonthEntry.pack(side="left")
+        foundersYearLabel = Label(dateFoundationFrame, text="Year", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
+        foundersYearLabel.pack(side="left")
+        self.foundersYearEntry = Entry(dateFoundationFrame, bg="#1B2631", fg="#ECF0F1",font=("Arial",14), width=4,  insertbackground="#ECF0F1")
+        self.foundersYearEntry.pack(side="left")
+        
+        
+        
+        #Frame to create a line break
+        spaceFrame = Frame(self, width=400, height=15, bg="#1B2631")
+        spaceFrame.pack()
         
         #Frame created to contain a label and password entry
-        passwordFrame = Label(self)
-        passwordFrame.config(bg="#1B2631")
-        passwordFrame.pack()
+        countryFrame = Label(self)
+        countryFrame.config(bg="#1B2631")
+        countryFrame.pack()
         
-        passwordLabel = Label(passwordFrame, text="Password:", fg="#ECF0F1", font=("Helveltic",16, BOLD))
-        passwordLabel.config(bg="#1B2631")
-        passwordLabel.pack(side="left")
-        self.passwordEntry = Entry(passwordFrame, bg="#1B2631", fg="#ECF0F1", show="*", font=("Arial",14), width=12,  insertbackground="#ECF0F1")
-        self.passwordEntry.pack(side="right")
+        countryLabel = Label(countryFrame, text="Country:", fg="#ECF0F1", font=("Helveltic",16, BOLD))
+        countryLabel.config(bg="#1B2631")
+        countryLabel.pack(side="left")
+        self.countryEntry = Entry(countryFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=12,  insertbackground="#ECF0F1")
+        self.countryEntry.pack(side="right")
+        
+        
+        
+        #Frame to create a line break
+        spaceFrame = Frame(self, width=400, height=15, bg="#1B2631")
+        spaceFrame.pack()
+        
+        #Frame created to contain a label and password entry
+        historyFrame = Label(self, bg="#1B2631")
+        historyFrame.pack()
+        
+        historyLabel = Label(historyFrame, text="Brand history:", fg="#ECF0F1", font=("Helveltic",16, BOLD), bg="#1B2631")
+        historyLabel.pack(side="left")
+        self.historyEntry = Text(historyFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",11), insertbackground="#ECF0F1", width=50, height=8)
+        self.historyEntry.pack(side="right")
+        #self.historyEntry = Entry(historyFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=12, insertbackground="#ECF0F1")
+        #self.historyEntry.pack(side="right")
         
         
         #Frame to create a line break
         spaceFrame2 = Frame(self, width=400, height=8, bg="#1B2631")
         spaceFrame2.pack()
-        
-        
-        #Frame created to contain a label and register button
-        #Was created 3 frames to make it stetic and mantain the button and the label at the center
-        registerFrame = Frame(self, bg="#1B2631")
-        registerFrame.pack()
-        #Frame created to contain a label inside the main registerFrame
-        registerTextFrame = Frame(registerFrame)
-        registerTextFrame.pack(side="left")
-        #Frame created to contain a button inside the main registerFrame
-        registerButtonFrame = Frame(registerFrame)
-        registerButtonFrame.pack(side="right")
-        
-        registerLabel = Label(registerTextFrame, text="Not a member yet?", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
-        registerLabel.pack(side="left")
-        self.registerButton = Button(registerButtonFrame, text="Sign Up", fg="#ECF0F1", font=("Helveltic",11, BOLD),bg="#17202A", activebackground="#1B2631", activeforeground="#F8F9F9", bd=1)
-        self.registerButton.config(command=self.openSignUp)
-        self.registerButton.pack(side="right")
-        
         
         #Frame assigned to create a label to advice a login problem
         self.spaceFrameError = Frame(self, width=400, height=15, bg="#1B2631")
@@ -119,14 +171,14 @@ class screenBrandRegister(Frame):
         
         
         #Last container to the login button
-        loginFrame = Frame(self)
-        loginFrame.config(bg="#1B2631")
-        loginFrame.pack()
+        registerFrame = Frame(self)
+        registerFrame.config(bg="#1B2631")
+        registerFrame.pack()
         
         #Button to execute the validationLogin method
-        self.loginButton = Button(loginFrame, text="Login" ,fg="#17202A", font=("Helveltic",17, BOLD), command= self.loginValidation)
-        self.loginButton.config(bg="#ECF0F1", activebackground="#F8F9F9", activeforeground="#1B2631")
-        self.loginButton.pack()
+        self.registerButton = Button(registerFrame, text="Register" ,fg="#17202A", font=("Helveltic",17, BOLD), command= self.brandValidation)
+        self.registerButton.config(bg="#ECF0F1", activebackground="#F8F9F9", activeforeground="#1B2631")
+        self.registerButton.pack()
         
         
         #Frame used to colorized the login form 

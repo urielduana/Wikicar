@@ -1,19 +1,16 @@
-from mainConnection import *
+from DataConnection.mainConnection import *
 
 class brand(dataBase):
     def __init__(self):
         dataBase.__init__(self)
         
     def getAllBrandId(self):
-        sql = 'SELECT Id_brand, Brand_name FROM brand'
+        sql = 'SELECT Brand_name, Id_brand FROM brand'
         
         try:
             self.cursor.execute(sql)
             brands = self.cursor.fetchall()
             idSeleccion = []
-            
-            for brand in brands:
-                idSeleccion.append(brand[0])
             return idSeleccion
         
         except Exception as e:

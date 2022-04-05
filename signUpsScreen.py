@@ -49,7 +49,7 @@ class screenSignUp(Frame):
             
             
     def userRegister(self):
-        if (len(self.nameEntry.get())>0) or (len(self.lastnameEntry.get())>0) or (len(self.genderEntry.get())>0):
+        if (len(self.nameEntry.get())>0) and (len(self.lastnameEntry.get())>0) and (len(self.genderEntry.get())>0):
             
             dataBaseConnected = user()
             dataBaseConnected.addUser(self.nameEntry.get(),self.lastnameEntry.get(), self.passwordEntry.get(), self.emailEntry.get(), self.genderEntry.get())
