@@ -18,3 +18,7 @@ atx003a2
 atx003a2
 alejandraHG@gmail.com
 F
+
+describe user; describe car; describe brand; describe model; describe section; describe post;
+select * from brand; select * from user;
+
