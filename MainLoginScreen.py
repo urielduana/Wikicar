@@ -1,4 +1,5 @@
 from tkinter import *
+from DataConnection.brandConnection import brand
 from brandRegisterScreen import screenBrandRegister
 from loginScreen import *
 from signUpsScreen import *

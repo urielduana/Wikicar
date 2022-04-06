@@ -16,22 +16,27 @@ class screenSignUp(Frame):
         
         
     def passwordValidation(self):
-        if len(self.passwordEntry.get()) >= 6:        
-            if self.passwordEntry.get() == self.repeatedpassEntry.get():
-                self.emailValidation()
+        if len(self.passwordEntry.get()) >= 6:  #Validates that the new account should have at least 6 characters password
+            if self.passwordEntry.get() == self.repeatedpassEntry.get():    #Validates that both pass has the same characters
+                self.emailValidation()      #Starts the email validation method
             else:
-                self.errorLabel.config(text="The password doesn't match")
+                self.errorLabel.config(text="The password doesn't match")   #Password advise
         else:
-            self.errorLabel.config(text="Empty Field - Password less than 6 characters")
+            self.errorLabel.config(text="Empty Field - Password less than 6 characters")    #Password advise characters leght
     
-    def emailValidation(self):
-        if len(self.emailEntry.get()) > 0:
-            email = self.emailEntry.get()         #Variables that connect and save the strings of the brand and password entries
+    def emailValidation(self):  #Validates that email is available
+        
+        if len(self.emailEntry.get()) > 0:  #Chech thath isn't empty email entry
+            
+            email = self.emailEntry.get()
                     
             dataBaseConnected = user()
             
+            #emailValidation searchs in the data base the emil and returns a boolean
+            #variable, FALSE if is in the data base
             validatedBoolen = dataBaseConnected.emailValidation(email)  
-                    
+            
+            dataBaseConnected.close()        
                     
             if validatedBoolen==False:
                 self.errorLabel.config(text="Email already registered")
@@ -42,21 +47,16 @@ class screenSignUp(Frame):
             self.errorLabel.config(text="Empty Field")
             
             
-    def userRegister(self):
+    def userRegister(self): #Register all data obtain in the form
+        #Check that all entry widgets has something write
         if (len(self.nameEntry.get())>0) and (len(self.lastnameEntry.get())>0) and (len(self.genderEntry.get())>0):
             
             dataBaseConnected = user()
             dataBaseConnected.addUser(self.nameEntry.get(),self.lastnameEntry.get(), self.passwordEntry.get(), self.emailEntry.get(), self.genderEntry.get())
-            print("completo")
+            dataBaseConnected.close()
         else:
             self.errorLabel.config(text="Empty Field - use + 8 characters")
-    
-    
-    def openLogin(self):
-        self.master.destroy()
-        root = Tk()
-        v = screenLogin(root)
-        v.mainloop()                    
+                      
                 
     def create_widgets(self):
         
@@ -157,6 +157,8 @@ class screenSignUp(Frame):
         loginButtonFrame = Frame(loginFrame)
         loginButtonFrame.pack(side="right")
         
+        
+        #Sign up frame 
         loginLabel = Label(loginTextFrame, text="Already register?", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
         loginLabel.pack(side="left")
         self.loginButton = Button(loginButtonFrame, text="Login", fg="#ECF0F1", font=("Helveltic",11, BOLD),bg="#17202A", activebackground="#1B2631", activeforeground="#F8F9F9", bd=1)
@@ -164,20 +166,19 @@ class screenSignUp(Frame):
         self.loginButton.pack(side="right")
         
         
-        #Frame assigned to create a label to advice a login problem
+        #Frame assigned to create a label to advice a problem
         self.spaceFrameError = Frame(self, width=400, height=15, bg="#1B2631")
         self.spaceFrameError.pack()
         self.errorLabel = Label(self.spaceFrameError, fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
         self.errorLabel.pack()
         
         
-        #Last container to the login button
+        #Last container to the sign up button
         signUpFrame = Frame(self, bg="#1B2631")
         signUpFrame.pack()
         
-        #Button to execute the validationLogin method
-        self.signUpButton = Button(signUpFrame, text="Sign Up" ,fg="#17202A", font=("Helveltic",17, BOLD), command= self.passwordValidation)
-        self.signUpButton.config(bg="#ECF0F1", activebackground="#F8F9F9", activeforeground="#1B2631")
+        #Button to execute the validation method
+        self.signUpButton = Button(signUpFrame, text="Sign Up" ,fg="#17202A", font=("Helveltic",17, BOLD), command= self.passwordValidation, bg="#ECF0F1", activebackground="#F8F9F9", activeforeground="#1B2631")
         self.signUpButton.pack()
         
         

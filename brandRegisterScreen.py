@@ -9,18 +9,24 @@ class screenBrandRegister(Frame, brand):
         self.master.config(bg="#17202A")    #Main Panel configuration and size
         self.master.geometry("1200x800")
         self.config(bg="#1B2631")
-        self.pack(side="right")                     #Interface created widht pack to try to make it responsive
+        self.pack(side="right")         #Interface created widht pack to try to make it responsive
         self.create_widgets()           #Create widgets Initialized at the beggining of the 
                                         #class to create widgets at the same moment that we open the interface
-        
+    
+    
+    
     def brandValidation(self):
+        #Check that brand name isn't already registered
+        
         if len(self.brandEntry.get()) > 0:
-            brands = self.brandEntry.get()         #Variables that connect and save the strings of the brand and password entries
-                    
-            dataBaseConnected = brand()
+            brands = self.brandEntry.get()
             
+            #Connection with the data base
+            dataBaseConnected = brand()
+            #Method that searchs the brand name and returns a boolean variable
             validatedBoolen = dataBaseConnected.nameValidation(brands)  
-                    
+            #Close the database connection
+            dataBaseConnected.close()
                     
             if validatedBoolen==False:
                 self.errorLabel.config(text="Brand already registered")
@@ -32,25 +38,31 @@ class screenBrandRegister(Frame, brand):
     
     
     def getTextHistory(self):
+    #Gets all characters in the "text" widget
         text = self.historyEntry.get(1.0, END+"-1c")
         return text
     
+    
     def brandRegister(self):
+    #Register brand Method
         historyText = self.getTextHistory()
         
         if (len(self.foundersEntry.get())>0) and (len(self.foundersDayEntry.get())>0) and (len(self.foundersMonthEntry.get())>0) and (len(self.foundersYearEntry.get())>0) and (len(self.countryEntry.get())>0) and (len(historyText)>0):
+        #Validates that all entries has something writted
             dataBaseConnected = brand()
             date = self.foundersYearEntry.get() + "-" + self.foundersMonthEntry.get() + "-" + self.foundersDayEntry.get()
             
-            
+            #Register all data compiled in the form
             dataBaseConnected.addBrand(self.brandEntry.get(), self.foundersEntry.get(), date, self.countryEntry.get(), historyText)
             print("Completo")
+            dataBaseConnected.close()
         else:
             self.errorLabel.config(text="Empty Field")
     
     
     def create_widgets(self):
         
+        #Top widgets, labels, frames
         welcomeLabel = Label(self, text="New Brand Registration", fg="#ECF0F1", font=("Helveltic",26, BOLD))
         welcomeLabel.config(bg="#1B2631", height=4)
         welcomeLabel.pack()  
@@ -71,13 +83,14 @@ class screenBrandRegister(Frame, brand):
         brandLabel.config(bg="#1B2631")
         brandLabel.pack(side="left")
         self.brandEntry = Entry(brandFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=16, insertbackground="#ECF0F1")
-        self.brandEntry.pack(side="right")  #"self." used to connect widgets wirh other moethods
+        self.brandEntry.pack(side="right")  
         
         
         
         #Frame to create a line break
         spaceFrame = Frame(self, width=400, height=15, bg="#1B2631")
         spaceFrame.pack()
+        
         
         #Frame created to contain a label and password entry
         foundersFrame = Label(self)

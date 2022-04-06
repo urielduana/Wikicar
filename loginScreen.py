@@ -25,6 +25,8 @@ class screenLogin(Frame):
         
         check = dataBaseConnected.getAllUserMailPass()  
         
+        dataBaseConnected.close()
+        
         for checked in check:                   #For loop to validate with the email and pass list and open a new window or throw an advise
             if checked[0] == email:
                 if checked[1] == password:
@@ -36,22 +38,14 @@ class screenLogin(Frame):
         if tag==False:
             self.errorLabel.config(text="User not available")    
     
-    def openSignUp(self):
-        self.master.destroy()     
-        root = Tk()
-        v = screenSignUp(root)
-        v.mainloop()
-    
     
     def create_widgets(self):
         
         #Main welcome labels
-        welcomeLabel = Label(self, text="Welcome to WikiCar", fg="#ECF0F1", font=("Helveltic",20, BOLD))
-        welcomeLabel.config(bg="#1B2631", height=4)
+        welcomeLabel = Label(self, text="Welcome to WikiCar", fg="#ECF0F1", font=("Helveltic",20, BOLD), bg="#1B2631", height=4)
         welcomeLabel.pack()  
                 
-        bottomLoginLabel = Label(self, text="Login", fg="#ECF0F1", font=("Helvetic", 22, BOLD))
-        bottomLoginLabel.config(bg="#1B2631")
+        bottomLoginLabel = Label(self, text="Login", fg="#ECF0F1", font=("Helvetic", 22, BOLD), bg="#1B2631")
         bottomLoginLabel.pack()
         
         
@@ -65,8 +59,7 @@ class screenLogin(Frame):
         emailFrame.config(bg="#1B2631")
         emailFrame.pack()
         
-        emailLabel = Label(emailFrame, text="Email:", fg="#ECF0F1", font=("Helveltic",16, BOLD))
-        emailLabel.config(bg="#1B2631")
+        emailLabel = Label(emailFrame, text="Email:", fg="#ECF0F1", font=("Helveltic",16, BOLD),bg="#1B2631")
         emailLabel.pack(side="left")
         self.emailEntry = Entry(emailFrame, bg="#1B2631", fg="#ECF0F1", font=("Arial",14), width=16, insertbackground="#ECF0F1")
         self.emailEntry.pack(side="right")  #"self." used to connect widgets wirh other moethods
@@ -78,12 +71,10 @@ class screenLogin(Frame):
         
         
         #Frame created to contain a label and password entry
-        passwordFrame = Label(self)
-        passwordFrame.config(bg="#1B2631")
+        passwordFrame = Label(self, bg="#1B2631")
         passwordFrame.pack()
         
-        passwordLabel = Label(passwordFrame, text="Password:", fg="#ECF0F1", font=("Helveltic",16, BOLD))
-        passwordLabel.config(bg="#1B2631")
+        passwordLabel = Label(passwordFrame, text="Password:", fg="#ECF0F1", font=("Helveltic",16, BOLD), bg="#1B2631")
         passwordLabel.pack(side="left")
         self.passwordEntry = Entry(passwordFrame, bg="#1B2631", fg="#ECF0F1", show="*", font=("Arial",14), width=12,  insertbackground="#ECF0F1")
         self.passwordEntry.pack(side="right")
@@ -120,19 +111,16 @@ class screenLogin(Frame):
         
         
         #Last container to the login button
-        loginFrame = Frame(self)
-        loginFrame.config(bg="#1B2631")
+        loginFrame = Frame(self, bg="#1B2631")
         loginFrame.pack()
         
         #Button to execute the validationLogin method
-        self.loginButton = Button(loginFrame, text="Login" ,fg="#17202A", font=("Helveltic",17, BOLD), command= self.loginValidation)
-        self.loginButton.config(bg="#ECF0F1", activebackground="#F8F9F9", activeforeground="#1B2631")
+        self.loginButton = Button(loginFrame, text="Login" ,fg="#17202A", font=("Helveltic",17, BOLD), command= self.loginValidation, bg="#ECF0F1", activebackground="#F8F9F9", activeforeground="#1B2631")
         self.loginButton.pack()
         
         
         #Frame used to colorized the login form 
-        centerFrame = Frame(self)
-        centerFrame.config(width=400, height=600, bg="#1B2631")
+        centerFrame = Frame(self, width=400, height=600, bg="#1B2631")
         centerFrame.pack()
         
                 
