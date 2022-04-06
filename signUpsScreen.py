@@ -16,36 +16,30 @@ class screenSignUp(Frame):
         
         
     def passwordValidation(self):
-        if len(self.passwordEntry.get()) >= 8:        
+        if len(self.passwordEntry.get()) >= 6:        
             if self.passwordEntry.get() == self.repeatedpassEntry.get():
-                print("Coincide")
                 self.emailValidation()
             else:
                 self.errorLabel.config(text="The password doesn't match")
         else:
-            self.errorLabel.config(text="Empty Field")
+            self.errorLabel.config(text="Empty Field - Password less than 6 characters")
     
     def emailValidation(self):
         if len(self.emailEntry.get()) > 0:
-            email = self.emailEntry.get()           #Variables that connect and save the strings of the email and password entries
+            email = self.emailEntry.get()         #Variables that connect and save the strings of the brand and password entries
                     
-            tag = False                        #Boolean variable to validate if the validation is incorrect and we need to throw a message to inform it
             dataBaseConnected = user()
             
-            check = dataBaseConnected.getAllUserMailPass()  
-            for checked in check:                   #For loop to validate with the email and pass list and open a new window or throw an advise
-                if checked[0] == email:
-                    tag = False
-                    break
-                else:
-                    tag=True
-            if tag==False:
-                self.errorLabel.config(text="Email not available")
-            if tag == True:
+            validatedBoolen = dataBaseConnected.emailValidation(email)  
+                    
+                    
+            if validatedBoolen==False:
+                self.errorLabel.config(text="Email already registered")
+            else:
                 self.userRegister()
 
         else:
-            self.errorLabel.config(text="Empty Field - use + 8 characters")
+            self.errorLabel.config(text="Empty Field")
             
             
     def userRegister(self):

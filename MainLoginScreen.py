@@ -4,5 +4,5 @@ from loginScreen import *
 from signUpsScreen import *
 
 root = Tk()
-v = screenBrandRegister(root)
+v = screenSignUp(root)
 v.mainloop()

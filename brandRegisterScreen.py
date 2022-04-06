@@ -17,23 +17,14 @@ class screenBrandRegister(Frame, brand):
         if len(self.brandEntry.get()) > 0:
             brands = self.brandEntry.get()         #Variables that connect and save the strings of the brand and password entries
                     
-            tag = True                        #Boolean variable to validate if the validation is incorrect and we need to throw a message to inform it
             dataBaseConnected = brand()
             
-            check = dataBaseConnected.getAllBrandId()  
-            
-            for checked in check:                   #For loop to validate with the brand and pass list and open a new window or throw an advise
-                print(checked[0])
-                if checked[0] == brands:
-                    tag = False
-                    break
-                else:
-                    tag=True
+            validatedBoolen = dataBaseConnected.nameValidation(brands)  
                     
                     
-            if tag==False:
+            if validatedBoolen==False:
                 self.errorLabel.config(text="Brand already registered")
-            if tag == True:
+            else:
                 self.brandRegister()
 
         else:
@@ -55,7 +46,7 @@ class screenBrandRegister(Frame, brand):
             dataBaseConnected.addBrand(self.brandEntry.get(), self.foundersEntry.get(), date, self.countryEntry.get(), historyText)
             print("Completo")
         else:
-            self.errorLabel.config(text="Empty Field - use + 8 characters")
+            self.errorLabel.config(text="Empty Field")
     
     
     def create_widgets(self):

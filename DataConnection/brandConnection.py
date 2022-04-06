@@ -1,3 +1,4 @@
+from queue import Empty
 from DataConnection.mainConnection import *
 
 class brand(dataBase):
@@ -12,6 +13,20 @@ class brand(dataBase):
             brands = self.cursor.fetchall()
             idSeleccion = []
             return idSeleccion
+        
+        except Exception as e:
+            raise
+    
+    def nameValidation(self, name):
+        sql = "SELECT Id_brand FROM BRAND WHERE Brand_name LIKE '{}'".format(name)
+        try:
+            self.cursor.execute(sql)
+            brandValidated = self.cursor.fetchone()
+            if brandValidated is None:
+                brandBoolean = True
+            else:
+                brandBoolean = False
+            return brandBoolean
         
         except Exception as e:
             raise

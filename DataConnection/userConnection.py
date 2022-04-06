@@ -21,6 +21,22 @@ class user(dataBase):
         except Exception as e:
             raise
         
+    def emailValidation(self, email):
+        sql = "SELECT Id_user FROM user WHERE Email LIKE '{}'".format(email)
+        try:
+            self.cursor.execute(sql)
+            emailValidated = self.cursor.fetchone()
+            
+            if emailValidated is None:
+                emailBoolean = True
+            else:
+                emailBoolean = False
+            
+            return emailBoolean
+        
+        except Exception as e:
+            raise
+        
     def getAllUserMailPass(self):
         sql = 'SELECT Email, Password FROM user'
         
