@@ -37,7 +37,9 @@ class screenLogin(Frame):
                               
         if tag==False:
             self.errorLabel.config(text="User not available")    
-    
+        if tag==True:
+            self.errorLabel.config(text="Login Completed")    
+            
     
     def create_widgets(self):
         
@@ -99,7 +101,7 @@ class screenLogin(Frame):
         registerLabel = Label(registerTextFrame, text="Not a member yet?", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
         registerLabel.pack(side="left")
         self.registerButton = Button(registerButtonFrame, text="Sign Up", fg="#ECF0F1", font=("Helveltic",11, BOLD),bg="#17202A", activebackground="#1B2631", activeforeground="#F8F9F9", bd=1)
-        self.registerButton.config(command=self.openSignUp)
+        #self.registerButton.config(command=self.openSignUp)
         self.registerButton.pack(side="right")
         
         

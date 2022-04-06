@@ -162,7 +162,7 @@ class screenSignUp(Frame):
         loginLabel = Label(loginTextFrame, text="Already register?", fg="#ECF0F1", font=("Helveltic",12, BOLD), bg="#1B2631")
         loginLabel.pack(side="left")
         self.loginButton = Button(loginButtonFrame, text="Login", fg="#ECF0F1", font=("Helveltic",11, BOLD),bg="#17202A", activebackground="#1B2631", activeforeground="#F8F9F9", bd=1)
-        self.loginButton.config(command=self.openLogin)
+        #self.loginButton.config(command=self.openLogin)
         self.loginButton.pack(side="right")
         
         

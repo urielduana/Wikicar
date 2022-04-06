@@ -1,0 +1,20 @@
+BRAND REGISTER
+
+Ferrari
+Enzo Ferrari
+13	09	1939
+Italia
+La Scuderia Ferrari comenzó a competir junto a pilotos y automóviles de Alfa Romeo y Fiat. La compañía comenzó a producir automóviles en serie en 1947. Se convirtió en Ferrari S.A. cuando en 1969 Fiat Group entró a ser parte del Consejo de Administración y se hizo accionista de la empresa.
+
+
+LOGIN
+carlosh@gmail.com
+abc123
+
+REGISTER
+Alejandra
+Hernandez Gutierrez
+atx003a2
+atx003a2
+alejandraHG@gmail.com
+F
